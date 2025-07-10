@@ -1,0 +1,11 @@
+### Update an existing entity
+PUT http://localhost:4000/patients/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+
+{
+  "name": "samir kali update2",
+  "email": "testupdate@test.ma",
+  "address": "123 qwe street",
+  "dateOfBirth": "1990-09-09"
+}
+###
