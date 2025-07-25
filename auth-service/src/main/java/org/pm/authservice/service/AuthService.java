@@ -1,10 +1,8 @@
 package org.pm.authservice.service;
 
-import org.pm.authservice.dto.LoginrequestDTO;
-
-import org.pm.authservice.model.User;
+import io.jsonwebtoken.JwtException;
+import org.pm.authservice.dto.LoginRequestDTO;
 import org.pm.authservice.util.JwtUtil;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,20 +15,33 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil ;
 
-    public AuthService(UserService userService,PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+    public AuthService(UserService userService,PasswordEncoder passwordEncoder,
+                       JwtUtil jwtUtil) {
         this.userService = userService;
-        this.passwordEncoder = new BCryptPasswordEncoder();
-        this.jwtUtil = new jwtUtil;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
-    public Optional<String> authenticate(LoginrequestDTO loginrequestDTO){
+    public Optional<String> authenticate(LoginRequestDTO loginRequestDTO){
         Optional<String> token = userService
-                .findByEmail(loginrequestDTO.getEmail())
-                .filter(u -> passwordEncoder.matches(loginrequestDTO.getPassword(),
+                .findByEmail(loginRequestDTO.getEmail())
+                .filter(u -> passwordEncoder.matches(loginRequestDTO.getPassword(),
                         u.getPassword()))
                 .map(u -> jwtUtil.generateToken(u.getEmail(),u.getRole()));
         return token;
     }
+
+
+    public boolean validateToken(String token){
+        try {
+            jwtUtil.validateToken(token);
+        } catch (JwtException e){
+            return false;
+        }
+        return true;
+
+    }
+
 
 
 }
