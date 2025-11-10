@@ -1,6 +1,6 @@
-# 🏥 Patient Management Microservices Platform
+# 🏥 Hospital Microservices Platform
 
-A cloud-native microservices platform for managing patient data, billing, authentication, and analytics — built with **AWS ECS**, **Kafka**, and **PostgreSQL**.
+A cloud-native microservices platform for managing data, billing, authentication, and analytics — built with **AWS ECS**, **Kafka**, and **PostgreSQL**.
 
 ---
 
@@ -15,7 +15,7 @@ Users interact with the system through a **public Application Load Balancer**, w
 
 ## ☁️ Architecture
 
-![AWS Architecture](./microHealthcare.drawio.png)
+![AWS Architecture](./MicroCare.drawio.png)
 
 ### Key Design Points
 - **Public Subnet** hosts only the Application Load Balancer (internet-facing).
